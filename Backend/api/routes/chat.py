@@ -6,7 +6,6 @@ from typing import Optional
 
 router = APIRouter()
 
-# Initialize services (in a real app, you might want to use dependency injection)
 rag_service = RAGService()
 llm_service = LLMService()
 
@@ -21,16 +20,13 @@ class ChatResponse(BaseModel):
 async def chat(request: ChatRequest, background_tasks: BackgroundTasks):
     try:
         user_input = request.message
-        
+        context = None
         if request.use_rag:
             context = rag_service.retrieve_context(user_input)
-            if context:
-                user_input = f"Context:\n{context}\n\nUser Query: {user_input}"
-                print(f'user input: {user_input}')
+                            
+        response = await llm_service.generate_response(user_input, context)
         
-        response = await llm_service.generate_response(user_input)
-        
-        return ChatResponse(response=response)
+        return ChatResponse(response="empty")
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

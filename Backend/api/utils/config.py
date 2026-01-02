@@ -5,13 +5,13 @@ load_dotenv()
 
 class Config:
     BASE_MODEL = os.getenv("BASE_MODEL", "meta-llama/Llama-3.2-1B")
-    ADAPTER_PATH = os.getenv("ADAPTER_PATH", "./final_model_2")
+    ADAPTER_PATH = os.getenv("ADAPTER_PATH")
     
     HF_TOKEN = os.getenv("HF_TOKEN")
     
     VECTOR_DB_PATH = os.getenv("VECTOR_DB_PATH", "./vector_db")
     
-    RAG_MODEL_NAME = os.getenv("RAG_MODEL_NAME", "all-MiniLM-L6-v2")
+    EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-mpnet-base-v2")
     RAG_TOP_K = int(os.getenv("RAG_TOP_K", "2"))
     
     MAX_NEW_TOKENS = int(os.getenv("MAX_NEW_TOKENS", "512"))
